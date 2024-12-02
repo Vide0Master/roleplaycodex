@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кодекс ролевика</title>
+    <!-- nullify styles -->
+    <style>
+        html,
+        body,
+        div,
+        span,
+        applet,
+        object,
+        iframe,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        blockquote,
+        pre,
+        a,
+        abbr,
+        acronym,
+        address,
+        big,
+        cite,
+        code,
+        del,
+        dfn,
+        em,
+        img,
+        ins,
+        kbd,
+        q,
+        s,
+        samp,
+        small,
+        strike,
+        strong,
+        sub,
+        sup,
+        tt,
+        var,
+        center,
+        dl,
+        dt,
+        dd,
+        ol,
+        ul,
+        li,
+        fieldset,
+        form,
+        label,
+        legend,
+        table,
+        caption,
+        tbody,
+        tfoot,
+        thead,
+        tr,
+        th,
+        td,
+        article,
+        aside,
+        canvas,
+        details,
+        embed,
+        figure,
+        figcaption,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        output,
+        ruby,
+        section,
+        summary,
+        time,
+        mark,
+        audio,
+        video {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            scroll-margin-top: 1em;
+        }
+
+        article,
+        aside,
+        details,
+        figcaption,
+        figure,
+        footer,
+        header,
+        hgroup,
+        menu,
+        nav,
+        section {
+            display: block;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            line-height: 1;
+        }
+
+        ol,
+        ul {
+            list-style: none;
+        }
+
+        blockquote,
+        q {
+            quotes: none;
+        }
+
+        blockquote:before,
+        blockquote:after,
+        q:before,
+        q:after {
+            content: '';
+            content: none;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    </style>
+
+    <!-- main style -->
+    <style>
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 1.2em;
+
+            --color1: #000;
+            --color2: #222;
+            --color3: #444;
+
+            --font-color: #ffee95;
+            --font-hover: #f68b00;
+
+            scroll-behavior: smooth;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            background-color: var(--color1);
+            color: var(--font-color);
+            padding: 1em;
+        }
+
+        a {
+            color: var(--font-color);
+            transition: 0.1s;
+            cursor: pointer;
+            text-decoration: underline;
+            width: fit-content;
+        }
+
+        a:hover {
+            color: var(--font-hover);
+            ;
+        }
+
+        h1 {
+            font-size: 2em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        .container>* {
+            background-color: var(--color2);
+            border-radius: 1em;
+            padding: 1em;
+
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .special-container {
+            background-color: var(--color3);
+            border-radius: 1em;
+            padding: 1em;
+            width: fit-content;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+        }
+
+        st {
+            color: #696969;
+            font-size: 0.7em;
+        }
+
+        .compare {
+            display: flex;
+            flex-direction: row;
+            gap: 0.5em;
+
+            background-color: var(--color2);
+            padding: 0.5em;
+
+            width: fit-content;
+            border-radius: 0.5em;
+        }
+
+        .compare .splitter {
+            background-color: #ffee95;
+            min-width: 3px;
+            flex: 1;
+        }
+
+        .compare .compare-block {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5em;
+            padding: 0.2em;
+            border-radius: 0.2em;
+        }
+
+        .scroll-target {
+            animation: ping 1s forwards;
+        }
+
+        @keyframes ping {
+            0% {
+                outline: solid 2px transparent;
+            }
+
+            25% {
+                outline: solid 2px var(--font-hover);
+            }
+
+            50% {
+                outline: solid 2px transparent;
+            }
+
+            75% {
+                outline: solid 2px var(--font-hover);
+            }
+
+            100% {
+                outline: solid 2px transparent;
+            }
+        }
+
+        .p {
+            color: greenyellow;
+        }
+
+        .n {
+            color: red;
+        }
+
+        .contained {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25em;
+            padding-left: 0.75em;
+        }
+    </style>
+    <script>
+        function elemScroll(elemID) {
+            const targetElement = document.querySelector("#" + elemID);
+
+            if (!targetElement) {
+                console.error("Элемент с ID " + elemID + " не найден.");
+                return;
+            }
+
+            const rect = targetElement.getBoundingClientRect();
+            const isInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && rect.right <= (window.innerWidth || document.documentElement.clientWidth);
+
+            if (!isInViewport) {
+                targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                targetElement.classList.add("scroll-target");
+                setTimeout(() => {
+                    targetElement.classList.remove("scroll-target");
+                }, 1000);
+            }
+
+            let isScrolling;
+            const onScroll = () => {
+                clearTimeout(isScrolling);
+
+                isScrolling = setTimeout(() => {
+                    window.removeEventListener("scroll", onScroll);
+                    targetElement.classList.add("scroll-target");
+
+                    setTimeout(() => {
+                        targetElement.classList.remove("scroll-target");
+                    }, 1000);
+                }, 150);
+            };
+
+            window.addEventListener("scroll", onScroll);
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1>Кодекс ролевых игр v1</h1>
+        </div>
+        <div>
+            <h1>Содержание</h1>
+            <div class="contained">
+                <a onclick="elemScroll('intro')">Вступление</a>
+                <a onclick="elemScroll('main-thesises')">Основные тезисы</a>
+                <div class="contained">
+                    <a onclick="elemScroll('character')">Персонаж</a>
+                    <a onclick="elemScroll('acting-person')">Я или не я?</a>
+                    <div class="contained">
+                        <a onclick="elemScroll('third-person')">Третье лицо</a>
+                        <a onclick="elemScroll('first-person')">Первое лицо</a>
+                    </div>
+                    <a onclick="elemScroll('tom-n-jerry')">Кошки-мышки</a>
+                    <div class="contained">
+                        <a onclick="elemScroll('standart-storytelling')">Стандартная форма</a>
+                        <a onclick="elemScroll('hybrid-storytelling')">Гибридная форма</a>
+                    </div>
+                    <a onclick="elemScroll('text-formatting')">Форматирование текста</a>
+                    <div class="contained">
+                        <a onclick="elemScroll('lines')">Реплики</a>
+                        <a onclick="elemScroll('actions')">Действия</a>
+                        <a onclick="elemScroll('context')">Контекст</a>
+                        <a onclick="elemScroll('non-rp')">Нон-рп</a>
+                        <a onclick="elemScroll('format-guide')">Подсказки по форматированию</a>
+                        <div class="contained">
+                            <a onclick="elemScroll('Discord')">Discord</a>
+                            <a onclick="elemScroll('Telegram')">Telegram</a>
+                            <a onclick="elemScroll('other')">Остальное</a>
+                        </div>
+                    </div>
+                    <a onclick="elemScroll('manners')">Манеры</a>
+                    <div class="contained">
+                        <a onclick="elemScroll('respect')">Уважение</a>
+                        <a onclick="elemScroll('queue')">Очередь</a>
+                        <a onclick="elemScroll('activity')">Активность</a>
+                        <a onclick="elemScroll('psize')">Масштаб</a>
+                    </div>
+                </div>
+                <a onclick="elemScroll('additional-thesises')">Вспомогательные правила</a>
+                <div class="contained">
+                    <a onclick="elemScroll('kinkshaming')">Kinkshaming</a>
+                    <a onclick="elemScroll('stopword')">Стоп-слово</a>
+                    <a onclick="elemScroll('swearing')">Брань</a>
+                </div>
+            </div>
+        </div>
+        <div id="intro">
+            <h1>Вступление</h1>
+            <p>Привет!</p>
+            <p>И добро пожаловать в очень интересную или сомнительную чтиву о том "как нужно" или "как не нужно" вести
+                текстовую ролевую игру.</p>
+            <p>Я - VideoMaster, автор этого "пособия".</p>
+            <p>С его помощью я хочу помочь новичкам освоиться в том как ведутся дела в кругах ролевиков VideoMaster'а.
+            </p>
+            <p>Для большего понимания почему я это написал, и описываю всё ниже именно таким образом: </p>
+            <ol style="list-style:upper-roman; padding-left: 2em;">
+                <li>Я лично провёл большое количество времени в ролевых играх с другими людьми, и видел разный отыгрыш,
+                    отношение, поведение, реакции, и могу достоверно заявлять о том что пишу.</li>
+                <li>Мной было создано несколько полноценных ролевых проектов, с разными концепциями мира, иногда -
+                    механиками.</li>
+                <li>Множество часов, сцен, локаций, идей, изменений в множестве моментов жизни, позволяют сделать выводы
+                    и выписать их, для упрощения жизни других.</li>
+            </ol>
+            <p>Эти суждения - лично моё мнение о том, как можно подходить к текстовым ролевым играм в самой удобной для
+                всех форме.</p>
+        </div>
+        <div id="main-thesises">
+            <h1>Основные тезисы</h1>
+            <div class="special-container" id="character">
+                <h2>Персонаж</h2>
+                <p>Ваш персонаж должен быть умеренно реалистичным. <st>(банально, не так ли?)</st>
+                </p>
+                <p>Он не должен выходить за рамки здравого смысла.</p>
+                <p>Вам, конечно, не запрещается создавать любое чудище по своему велению или подобию, но нужно это
+                    делать так, что-бы другие это принимали.</p>
+                <p>В целом, залог успеха в создании своего виртуального "Я", состоит в понимании того где вы будете
+                    существовать.</p>
+                <p>Вообразите себя на месте своего будущего персонажа, подумайте кем он может быть...</p>
+                <p>Не получилось? Не беда! спросите у старожил, как и где вы можете прижиться в выдуманном мире.</p>
+            </div>
+            <div class="special-container" id="acting-person">
+                <h2>Я или не я?</h2>
+                <p>Один из самых интересных вопросов который может задавать себе ролевик<st>(учатсник текстовой ролевой
+                        игры)</st>.</p>
+                <p>Самый лучший выбор это обращение в третьем лице.</p>
+                <div class="compare">
+                    <div class="compare-block" id="third-person">
+                        <div>Третье лицо</div>
+                        <div class="list">
+                            <div class="first"><i>Валентин ласково гладит кошку</i></div>
+                            <div class="second">- она тебе настолько понравилась?<br><i>Дмитрий старательно убирает с
+                                    пиджака шерсть</i></div>
+                            <div class="first">- да, ты имеешь что-то против?<br><i>Валентин всё так же гладит кошку,
+                                    иногда почёсывая ей за ушком</i></div>
+                            <div class="second">- Ни в коем случае</div>
+                        </div>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="compare-block" id="first-person">
+                        <div>Первое лицо</div>
+                        <div class="list">
+                            <div class="first"><i>Я ласково глажу кошку</i></div>
+                            <div class="second">- она тебе настолько понравилась?<br><i>Я старательно убираю с пиджака
+                                    шерсть</i></div>
+                            <div class="first">- да, ты имеешь что-то против?<br><i>Я всё так же глажу кошку, иногда
+                                    почёсывая ей за ушком</i></div>
+                            <div class="second">- Ни в коем случае</div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .first {
+                            align-self: flex-start;
+                            color: #000;
+                            background-color: #fff;
+                            padding: 0.2em;
+                            border-radius: 0.4em;
+                            border-bottom-left-radius: 0;
+                        }
+
+                        .second {
+                            align-self: flex-end;
+                            color: #000;
+                            background-color: #fff;
+                            padding: 0.2em;
+                            border-radius: 0.4em;
+                            border-bottom-right-radius: 0;
+                        }
+
+                        .list {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            gap: 0.5em;
+                        }
+
+                        .list>* {
+                            font-size: 0.7em;
+                        }
+                    </style>
+                </div>
+                <div>В обоих сценариях отыграна одна и та самая сцена, но в случае третьего лица - нету сильной привязки
+                    своего "Я" к "я" выдуманного героя.</div>
+                <div>В большинстве случаев все выбирают <a onclick="elemScroll('third-person')">первый вариант</a>.
+                </div>
+            </div>
+            <div class="special-container" id="tom-n-jerry">
+                <h2>Кошки-мышки</h2>
+                <p>Важно понимать что в большинстве ролевых игр есть те кто <b><i>ведёт</i></b> игру и те кто
+                    <b><i>ведомые</i></b> в игре.
+                </p>
+                <p><b><i>Ведущий</i></b> - человек который выполяет роль "коммандира" указывая, подсказывая, направляя
+                    <u>ведомых</u> по ходу ролевой игры.
+                </p>
+                <p><b><i>Ведомый</i></b> - человек который подчиняется решениям и действиям <u>ведущего</u> в реализации
+                    его задумок.</p>
+                <h2>Гибриды</h2>
+                <p>Отыгровка не обязательно должна соблюдаться в такой строгой форме. Никто не запрещает и не отрицает
+                    возможность отыгровки с множеством активных ведущих.</p>
+                <p>Хоть и в большинстве сценариев всё происходит под контроллем одного человека <st>(1 ведущий, 1+
+                        подчинённый)</st>. Но контроллировать события двоим достаточно тяжело.</p>
+                <div class="compare">
+                    <div class="compare-block" id="standart-storytelling">
+                        <div>Стандартная форма</div>
+                        <div class="compare">
+                            <div class="compare-block">
+                                <div>Ведущий</div>
+                                <p class="p">+ Ориентируется в ситуации</p>
+                                <p class="p">+ Имеет чёткий план<br>
+                                    <st>(импровизация - исключение)</st>
+                                </p>
+                                <p class="n">- Не может контроллировать большое количество ведомых</p>
+                            </div>
+                            <div class="splitter"></div>
+                            <div class="compare-block">
+                                <div>Ведомый(е)</div>
+                                <p class="p">+ Ориентация в ситуации</p>
+                                <p class="p">+ Адекватное взаимопонимание по персонажу</p>
+                                <p class="n">- Возможны ограничения от Ведущего</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="splitter"></div>
+                    <div class="compare-block" id="hybrid-storytelling">
+                        <div>Гибридная форма</div>
+                        <div class="compare">
+                            <div class="compare-block">
+                                <div>Ведущий(e)</div>
+                                <p class="p">+ Упрощение контроля над большим количеством игроков</p>
+                                <p class="n">- Сложность взаимопония между другими ведущими</p>
+                            </div>
+                            <div class="splitter"></div>
+                            <div class="compare-block">
+                                <div>Ведомый(е)</div>
+                                <p class="p">+ Почти постоянная активность</p>
+                                <p class="n">- Контраст между разными ведущими</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p>Ещё есть вариант где дуо или трио <st>(или более)</st> игроков постоянно <a
+                        onclick="elemScroll('hybrid-storytelling')">меняются</a> ролями, или сразу
+                    исполняют обе роли одновренно.</p>
+                <p>В таком случае, возникнет ещё больший хаос.</p>
+                <p>В заключение: Ведущий должен быть 1, с чётко выстроенной идеей по которой должны идти игроки. Игрокам
+                    ничего не мешает отклонятся от изначальной идеи пока это не мешает ведущему выполнять свой план.</p>
+            </div>
+            <div class="special-container" id="text-formatting">
+                <h2>Форматирование текста</h2>
+                <p>В базе всё сводится к тому что есть реплика, действие, контекст и нон-рп сообщения <st>
+                        (дополнительная информация)</st>.</p>
+                <p>Самый лучший вариант это использование форматируемого текста в соответствующем приложении, сервисе,
+                    сайте где вы ведёте ролевую игру.</p>
+                <div class="compare" id="lines">
+                    <div class="compare-block">
+                        <div>Реплики</div>
+                        <p class="p">- Я.. Тайлер Дерден</p>
+                        <p class="n">-Я.. Тайлер Дерден</p>
+                        <p class="n">Я.. Тайлер Дерден</p>
+                        <p class="n">*я.. Тайдер Дерден</p>
+                        <p style="font-size: 0.8em;">Начинать текст реплики всегда с дефиса с пробелом после него.</p>
+                    </div>
+                </div>
+                <div class="compare" id="actions">
+                    <div class="compare-block">
+                        <div>Действия</div>
+                        <p class="p"><i>Ганс достал огнемёт</i></p>
+                        <p class="n"><u>Ганс достал огнемёт</u></p>
+                        <p class="n"><b>Ганс достал огнемёт</b></p>
+                        <p class="n">[Ганс достал огнемёт]</p>
+                        <p style="font-size: 0.8em;">Используй условное форматирование для написания текстом курсивом.
+                        </p>
+                        <st>Если такая опция не доступна, выделить текст звёздочками по бокам:</st>
+                        <p class="p">*Ганс достал огнемёт*</p>
+                    </div>
+                </div>
+                <div class="compare" id="context">
+                    <div class="compare-block">
+                        <div>Контекст</div>
+                        <p class="p"><i>Удивительно но вокруг царит тишина... С чего бы это вдруг?</i></p>
+                        <p style="font-size: 0.8em;">Правила идентичны действиям. Даже правило звёздочек.</p>
+                    </div>
+                </div>
+                <div class="compare" id="non-rp">
+                    <div class="compare-block">
+                        <div>Нон-рп</div>
+                        <p class="p">//а откуда Ганс взял огнемёт?</p>
+                        <p class="n">откуда у Ганса огнемёт?</p>
+                        <p class="n">[откуда у Ганса огнемёт?]</p>
+                        <p style="font-size: 0.8em;">Для описания сообщений которые не являются отыгровкой использовать
+                            "//" в начале сообщения, и не от лица прокси-аккаунта (в зависимости от сервиса который
+                            используется)</p>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 0.5em;" id="format-guide">
+                    <h2>Подсказки по форматированию</h2>
+                    <div class="compare">
+                        <div class="compare-block" id="Discord">
+                            <div>Discord</div>
+                            <div>- &lt;текст&gt; → • &lt;текст&gt;</div>
+                            <div>*&lt;текст&gt;* → <i>&lt;текст&gt;</i></div>
+                            <div>_&lt;текст&gt;_ → <i>&lt;текст&gt;</i></div>
+                            <div>**&lt;текст&gt;** → <b>&lt;текст&gt;</b></div>
+                            <div>__&lt;текст&gt;__ → <u>&lt;текст&gt;</u></div>
+                            <div>~~&lt;текст&gt;~~ → <s>&lt;текст&gt;</s></div>
+                            <div>||&lt;текст&gt;|| → &lt;текст под спойлером&gt;</div>
+                        </div>
+                        <div class="splitter"></div>
+                        <div class="compare-block" id="Telegram">
+                            <div>Telegram</div>
+                            <div>__&lt;текст&gt;__ → <i>&lt;текст&gt;</i></div>
+                            <div>**&lt;текст&gt;** → <b>&lt;текст&gt;</b></div>
+                            <div>~~&lt;текст&gt;~~ → <s>&lt;текст&gt;</s></div>
+                            <div>Остальные формы требуют ручной стилизации через выделение текста</div>
+                        </div>
+                        <div class="splitter"></div>
+                        <div class="compare-block" id="other">
+                            <div>Остальное <st>(то что часто можно увидеть)</st>
+                            </div>
+                            <div>*&lt;текст&gt;* → <i>&lt;текст&gt;</i></div>
+                            <div>_&lt;текст&gt;_ → <u>&lt;текст&gt;</u></div>
+                            <div>~&lt;текст&gt;~ → <s>&lt;текст&gt;</s></div>
+                            <div>Не обязательно что нужен именно 1 открывающий и закрывающий символ (*, _, ~).</div>
+                        </div>
+                    </div>
+                    <p>Только не вздумай писать скобки "&lt;&gt;"... Это же не так сложно?</p>
+                </div>
+            </div>
+            <div class="special-container" id="manners">
+                <h2>Манеры</h2>
+                <p>Удивительно, но взрослым людям нужно объяснять как надо относится к другим, удивительно, не правда
+                    ли?</p>
+                <ul style="list-style:upper-roman; padding-left: 2em;">
+                    <li>
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="respect">
+                            <h2>Уважение</h2>
+                            <p>Звучит просто, но на практике очень сложно!</p>
+                            <p>По другую сторону монитора сидит тоже живой человек, и как-то так сошлась судьба что вы
+                                играете в игрушки, воображаемые в голове, с кем-то кого возможно даже не видели вживую
+                                ни
+                                разу.</p>
+                            <p>Уважайте своего со-ролевика</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="queue">
+                            <h2>Очередь</h2>
+                            <p>А вы думали что очереди только в магазинах существуют?</p>
+                            <p>Ждите своей очереди, когда соролевик закончит писать то что хотел, даже если это не одна
+                                или 2 реплики подряд.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="activity">
+                            <h2>Активность</h2>
+                            <p>Самая тяжелая часть ролевых игр - сидеть на одном месте.</p>
+                            <p>Ради всего святого, или нечистого что есть на этой жалкой планете... Сообщайте
+                                соролевикам о том что вы заняты.</p>
+                            <p>Это очень просто, и очень полезно если тот с кем вы общаетесь понимает, чем вы заняты, и
+                                знает что вы физически не можете писать по 10+ постов в минуту.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="psize">
+                            <h2>Масштаб</h2>
+                            <p>Это уже, увы, решайте между собой.</p>
+                            <p>Самый популярный вариант это короткие посты которые не описывают деталей, а описывают
+                                конкретные действия персонажа, который приближены к выполнению в реальном времени.</p>
+                            <p>Увы, такой масштаб не раскрывает "художественный" потенциал соролевика, а позволяет более
+                                погрузиться в процесс на основе более конкретных действий.</p>
+                            <p>Большие посты могут описывать локации, могут описывать события из прошлого, но лучше не
+                                натягивать и так не быстрый процесс игры, который передаётся текстом.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="additional-thesises">
+            <h1>Вспомогательные правила</h1>
+            <div class="special-container" id="kinkshaming">
+                <h2>Kinkshaming</h2>
+                <p>Это очень простой термин, который буквально значит то что написано - Кинк-шейминг, или осуждение
+                    фетишей.</p>
+                <p>Уважайте фетиши соролевиков, пока те не выходят за рамки разумного.</p>
+                <p>И сами не предлагайте такие вещи, если хотите остаться человеком в глазах других.</p>
+                <st>Фетишизм распростянется не только на интимные ролевые игры.</st>
+            </div>
+            <div class="special-container" id="stopword">
+                <h2>Стоп-слово</h2>
+                <p>Хорошим тоном будет наличие личного или общего стоп-слова, которое позвалит остановить или приостановить игру.</p>
+                <p>Применять имеет смысл в случаях если вам не нравиться или игра повлияла на вас психически.</p>
+                <p>Остальные случаи, а именно не критические, можно использовать <a onclick="elemScroll('non-rp')">нон-рп</a>.</p>
+            </div>
+            <div class="special-container" id="swearing">
+                <h2>Брань</h2>
+                <p>Брань это хороший способ выразить эмоции!</p>
+                <p>Если вы хотите выразить эмоции персонажа бранными словами, делайте это прямо, без всякой цензуры.</p>
+                <p>Если ваш соролевик не одобряет брань, не используйте, или заменяйте другими ругательными словами, но не "блять", "сука", "уёбок" и т.д.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
