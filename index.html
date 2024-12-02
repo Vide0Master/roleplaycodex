@@ -347,6 +347,10 @@
                     <a onclick="elemScroll('tom-n-jerry')">Кошки-мышки</a>
                     <div class="contained">
                         <a onclick="elemScroll('standart-storytelling')">Стандартная форма</a>
+                        <div class="contained">
+                            <a onclick="elemScroll('leader')">Ведущий</a>
+                            <a onclick="elemScroll('wingman')">Ведомый</a>
+                        </div>
                         <a onclick="elemScroll('hybrid-storytelling')">Гибридная форма</a>
                     </div>
                     <a onclick="elemScroll('text-formatting')">Форматирование текста</a>
@@ -375,6 +379,7 @@
                     <a onclick="elemScroll('kinkshaming')">Kinkshaming</a>
                     <a onclick="elemScroll('stopword')">Стоп-слово</a>
                     <a onclick="elemScroll('swearing')">Брань</a>
+                    <a onclick="elemScroll('action-override')">Перехват действий</a>
                 </div>
             </div>
         </div>
@@ -497,7 +502,7 @@
                     <div class="compare-block" id="standart-storytelling">
                         <div>Стандартная форма</div>
                         <div class="compare">
-                            <div class="compare-block">
+                            <div class="compare-block" id="leader">
                                 <div>Ведущий</div>
                                 <p class="p">+ Ориентируется в ситуации</p>
                                 <p class="p">+ Имеет чёткий план<br>
@@ -506,7 +511,7 @@
                                 <p class="n">- Не может контроллировать большое количество ведомых</p>
                             </div>
                             <div class="splitter"></div>
-                            <div class="compare-block">
+                            <div class="compare-block" id="wingman">
                                 <div>Ведомый(е)</div>
                                 <p class="p">+ Ориентация в ситуации</p>
                                 <p class="p">+ Адекватное взаимопонимание по персонажу</p>
@@ -626,7 +631,8 @@
                     ли?</p>
                 <ul style="list-style:upper-roman; padding-left: 2em;">
                     <li>
-                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="respect">
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;"
+                            id="respect">
                             <h2>Уважение</h2>
                             <p>Звучит просто, но на практике очень сложно!</p>
                             <p>По другую сторону монитора сидит тоже живой человек, и как-то так сошлась судьба что вы
@@ -637,7 +643,8 @@
                         </div>
                     </li>
                     <li>
-                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="queue">
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;"
+                            id="queue">
                             <h2>Очередь</h2>
                             <p>А вы думали что очереди только в магазинах существуют?</p>
                             <p>Ждите своей очереди, когда соролевик закончит писать то что хотел, даже если это не одна
@@ -645,7 +652,8 @@
                         </div>
                     </li>
                     <li>
-                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="activity">
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;"
+                            id="activity">
                             <h2>Активность</h2>
                             <p>Самая тяжелая часть ролевых игр - сидеть на одном месте.</p>
                             <p>Ради всего святого, или нечистого что есть на этой жалкой планете... Сообщайте
@@ -655,7 +663,8 @@
                         </div>
                     </li>
                     <li>
-                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;" id="psize">
+                        <div style="display: flex; flex-direction: column; gap: 0.5em; padding: 0.2em; border-radius: 0.2em;"
+                            id="psize">
                             <h2>Масштаб</h2>
                             <p>Это уже, увы, решайте между собой.</p>
                             <p>Самый популярный вариант это короткие посты которые не описывают деталей, а описывают
@@ -681,15 +690,29 @@
             </div>
             <div class="special-container" id="stopword">
                 <h2>Стоп-слово</h2>
-                <p>Хорошим тоном будет наличие личного или общего стоп-слова, которое позвалит остановить или приостановить игру.</p>
+                <p>Хорошим тоном будет наличие личного или общего стоп-слова, которое позвалит остановить или
+                    приостановить игру.</p>
                 <p>Применять имеет смысл в случаях если вам не нравиться или игра повлияла на вас психически.</p>
-                <p>Остальные случаи, а именно не критические, можно использовать <a onclick="elemScroll('non-rp')">нон-рп</a>.</p>
+                <p>Остальные случаи, а именно не критические, можно использовать <a
+                        onclick="elemScroll('non-rp')">нон-рп</a>.</p>
             </div>
             <div class="special-container" id="swearing">
                 <h2>Брань</h2>
                 <p>Брань это хороший способ выразить эмоции!</p>
                 <p>Если вы хотите выразить эмоции персонажа бранными словами, делайте это прямо, без всякой цензуры.</p>
-                <p>Если ваш соролевик не одобряет брань, не используйте, или заменяйте другими ругательными словами, но не "блять", "сука", "уёбок" и т.д.</p>
+                <p>Если ваш соролевик не одобряет брань, не используйте, или заменяйте другими ругательными словами, но
+                    не "блять", "сука", "уёбок" и т.д.</p>
+            </div>
+            <div class="special-container" id="action-override">
+                <h2>Перехват действий</h2>
+                <p>Перехватывать чужие действия, это не самая хорошая идея, что по названию уже можно понять.</p>
+                <p>Такое может выполнять только <a onclick="elemScroll('leader')">ведущий</a>, так как он отвечает за
+                    целостность и последовательность игры.</p>
+                <p>Самым худшим проявлением будет это написание огромных постов в которых автор поста описывает действия
+                    персонажей которые ему не должны быть подвластны.</p>
+                <p>Исключением являются, опять же, <a onclick="elemScroll('leader')">ведущие</a>. Так как они изначально должны контроллировать всё.</p>
+                <p>Хотя есть сценарии <st>(<a onclick="elemScroll('hybrid-storytelling')">гибридный контроль</a>)</st> в которых все могут делать что хотят.</p>
+                <p>В таком случае - нужно большое взаимопонимание.</p>
             </div>
         </div>
     </div>
